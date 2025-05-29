@@ -43,12 +43,14 @@ const RegionRankingSection = () => {
   const titleRef = useRef(null);
   const listRef = useRef(null);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchRankings = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch('/api/rankings');
+        const response = await fetch(`${API_URL}/api/rankings`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
         }

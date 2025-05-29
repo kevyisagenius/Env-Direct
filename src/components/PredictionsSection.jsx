@@ -32,12 +32,14 @@ const PredictionsSection = () => {
   const titleRef = useRef(null);
   const cardsContainerRef = useRef(null);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchPredictions = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch('/api/predictions');
+        const response = await fetch(`${API_URL}/api/predictions`);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
         const processedData = data.map(item => ({

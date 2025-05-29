@@ -13,12 +13,14 @@ const CampaignBannerSection = () => {
   const sectionRef = useRef(null);
   const contentWrapperRef = useRef(null); // Ref for the content wrapper that has initial opacity-0
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchBannerData = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch('/api/banner');
+        const response = await fetch(`${API_URL}/api/banner`);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
         // Check if response is okay AND has content
         if (response.status === 204) { // No Content

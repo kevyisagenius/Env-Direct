@@ -77,6 +77,8 @@ const LiveDataDashboardSection = () => {
   const titleRef = useRef(null);
   const cardsContainerRef = useRef(null); // Ref for the div wrapping the cards
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const sectionEl = sectionRef.current;
     const titleEl = titleRef.current;
@@ -115,7 +117,7 @@ const LiveDataDashboardSection = () => {
   const fetchDashboardData = async () => {
     setError(null);
     try {
-      const response = await fetch('/api/live-data');
+      const response = await fetch(`${API_URL}/api/live-data`);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       setMetricsData(data);
