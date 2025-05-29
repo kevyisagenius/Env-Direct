@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx'; // Import the custom hook
 import authService from '../services/authService';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const SubmitArticlePage = () => {
   // const { currentUser } = useContext(AuthContext); // Old way
   const { currentUser } = useAuth(); // New way: use the custom hook
@@ -28,12 +30,12 @@ const SubmitArticlePage = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const categoriesResponse = await fetch('/api/categories');
+        const categoriesResponse = await fetch(`${API_URL}/api/categories`);
         if (!categoriesResponse.ok) throw new Error('Failed to fetch categories');
         const categoriesData = await categoriesResponse.json();
         setCategories(categoriesData);
 
-        const tagsResponse = await fetch('/api/tags');
+        const tagsResponse = await fetch(`${API_URL}/api/tags`);
         if (!tagsResponse.ok) throw new Error('Failed to fetch tags');
         const tagsData = await tagsResponse.json();
         setTags(tagsData);
@@ -85,7 +87,7 @@ const SubmitArticlePage = () => {
         return;
       }
 
-      const response = await fetch('/api/articles/submit', { // New endpoint for Junie
+      const response = await fetch(`${API_URL}/api/articles/submit`, { // New endpoint for Junie
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

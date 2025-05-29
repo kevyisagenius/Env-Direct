@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 // Placeholder for a single article page/route later
 // import { Link } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const GreenAtlasMagazinePage = () => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -50,8 +52,8 @@ const GreenAtlasMagazinePage = () => {
     setFiltersError(null);
     try {
       const [categoriesResponse, tagsResponse] = await Promise.all([
-        fetch('/api/categories'),
-        fetch('/api/tags')
+        fetch(`${API_URL}/api/categories`),
+        fetch(`${API_URL}/api/tags`)
       ]);
       const categoriesData = await categoriesResponse.json();
       const tagsData = await tagsResponse.json();
@@ -73,9 +75,8 @@ const GreenAtlasMagazinePage = () => {
   const fetchArticles = useCallback(async () => {
     setIsLoading(true);
     setError(null);
-    let url = `/api/articles?page=${currentPage}&size=${articlesPerPage}&sort=${sortOption}`;
+    let url = `${API_URL}/api/articles?page=${currentPage}&size=${articlesPerPage}&sort=${sortOption}`;
     if (effectiveSearchTerm) url += `&search=${encodeURIComponent(effectiveSearchTerm)}`;
-    // Send categoryName and tagName if they are selected (not empty string)
     if (selectedCategory) url += `&categoryName=${encodeURIComponent(selectedCategory)}`;
     if (selectedTag) url += `&tagName=${encodeURIComponent(selectedTag)}`;
 

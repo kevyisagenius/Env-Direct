@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const ReportDetailPage = () => {
   const { reportId } = useParams(); // Get reportId from URL
   const [report, setReport] = useState(null);
@@ -12,7 +14,7 @@ const ReportDetailPage = () => {
     const fetchReportDetails = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`http://localhost:8080/api/reports/${reportId}`);
+        const response = await axios.get(`${API_URL}/api/reports/${reportId}`);
         setReport(response.data);
         setError(null);
       } catch (err) {
@@ -105,7 +107,7 @@ const ReportDetailPage = () => {
                   <h2 className="text-sm font-medium text-gray-500">Image</h2>
                   {/* Construct the full URL for the image */}
                   <img 
-                    src={`http://localhost:8080/api/reports/images/${report.imageUrl}`}
+                    src={`${API_URL}/api/reports/images/${report.imageUrl}`}
                     alt={`Report ${report.id}`}
                     className="mt-2 rounded-lg shadow-md max-w-full h-auto" 
                     style={{maxHeight: '400px'}}

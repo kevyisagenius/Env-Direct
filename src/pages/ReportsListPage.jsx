@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; // For linking to individual report details later
 import axios from 'axios'; // Import axios
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 // Mock data for reports - replace with data from API later
 /* const mockReports = [
   {
@@ -51,7 +53,7 @@ const ReportsListPage = () => {
     const fetchReports = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get('http://localhost:8080/api/reports');
+        const response = await axios.get(`${API_URL}/api/reports`);
         setReports(response.data);
         setError(null);
       } catch (err) {

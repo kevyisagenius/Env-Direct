@@ -4,6 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const reportSchema = z.object({
   location: z.string().min(5, 'Location description must be at least 5 characters'),
   issueType: z.enum(['air_pollution', 'water_pollution', 'waste_dumping', 'deforestation', 'other'], { 
@@ -65,7 +67,7 @@ const ReportFormPage = () => {
 
     try {
       // Axios will automatically set Content-Type to multipart/form-data
-      const response = await axios.post('http://localhost:8080/api/reports', formData);
+      const response = await axios.post(`${API_URL}/api/reports`, formData);
       console.log('API Response:', response.data);
       setSubmitStatus('success');
       setSubmitMessage('Report submitted successfully! Thank you.');
