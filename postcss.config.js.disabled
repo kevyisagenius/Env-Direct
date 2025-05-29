@@ -1,0 +1,6 @@
+// This file is not actively used when @tailwindcss/vite plugin is enabled in vite.config.js
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+}; 

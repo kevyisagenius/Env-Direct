@@ -1,0 +1,10 @@
+[[redirects]]
+  from = "/api/*"
+  to = "https://2d8e-216-181-196-82.ngrok-free.app/api/:splat" # Updated with your ngrok URL
+  status = 200 # Proxy
+  force = true # Ensures it acts as a proxy
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 
