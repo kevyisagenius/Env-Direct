@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './AIChatbot.css'; // Import the CSS file
+const API_URL = import.meta.env.VITE_API_URL;
 
 // Simple Chat Bubble Icon (you can replace with an SVG or a more complex icon)
 const ChatIcon = () => (
@@ -45,7 +46,7 @@ const AIChatbot = () => {
     setInputValue(''); // Clear input field immediately
 
     try {
-      const response = await fetch('/api/chat', { // Calls your Spring Boot backend
+      const response = await fetch(`${API_URL}/api/chat`, { // Calls your Spring Boot backend
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

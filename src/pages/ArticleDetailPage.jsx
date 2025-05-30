@@ -9,6 +9,7 @@ import {
 } from 'react-share';
 import { useAuth } from '../context/AuthContext.jsx';
 import authService from '../services/authService';
+const API_URL = import.meta.env.VITE_API_URL;
 
 // Helper to format date (optional)
 const formatDate = (dateString) => {
@@ -60,7 +61,7 @@ const ArticleDetailPage = () => {
 
     try {
       // Fetch main article
-      const articleResponse = await fetch(`/api/articles/${articleId}`);
+      const articleResponse = await fetch(`${API_URL}/api/articles/${articleId}`);
       if (!articleResponse.ok) {
         if (articleResponse.status === 404) throw new Error('Article not found.');
         throw new Error(`HTTP error fetching article! status: ${articleResponse.status}`);
@@ -70,7 +71,7 @@ const ArticleDetailPage = () => {
       setIsLoading(false); // Article loaded
 
       // Fetch comments for the loaded article
-      const commentsResponse = await fetch(`/api/articles/${articleId}/comments`);
+      const commentsResponse = await fetch(`${API_URL}/api/articles/${articleId}/comments`);
       if (!commentsResponse.ok) {
         throw new Error(`HTTP error fetching comments! status: ${commentsResponse.status}`);
       }
@@ -80,7 +81,7 @@ const ArticleDetailPage = () => {
 
       // Fetch related articles for the loaded article
       if (articleData && articleData.id) { // Ensure we have an article ID
-        const relatedResponse = await fetch(`/api/articles/${articleData.id}/related?count=3`); // Fetch 3 related articles
+        const relatedResponse = await fetch(`${API_URL}/api/articles/${articleData.id}/related?count=3`); // Fetch 3 related articles
         if (!relatedResponse.ok) {
           throw new Error(`HTTP error fetching related articles! status: ${relatedResponse.status}`);
         }
@@ -134,7 +135,7 @@ const ArticleDetailPage = () => {
 
     try {
       // Use authenticatedFetch for submitting the comment
-      await authService.authenticatedFetch(`/api/articles/${articleId}/comments`, {
+      await authService.authenticatedFetch(`${API_URL}/api/articles/${articleId}/comments`, {
         method: 'POST',
         // Content-Type is set to application/json by default in authenticatedFetch if not specified
         body: JSON.stringify({ 
@@ -149,7 +150,7 @@ const ArticleDetailPage = () => {
       
       // Re-fetch comments after successful submission using regular fetch (or authenticatedFetch if GET comments is protected)
       // Assuming GET /comments is not protected for now.
-      const commentsResponse = await fetch(`/api/articles/${articleId}/comments`);
+      const commentsResponse = await fetch(`${API_URL}/api/articles/${articleId}/comments`);
       if (!commentsResponse.ok) throw new Error(`HTTP error fetching comments! status: ${commentsResponse.status}`);
       const commentsData = await commentsResponse.json();
       setComments(commentsData);

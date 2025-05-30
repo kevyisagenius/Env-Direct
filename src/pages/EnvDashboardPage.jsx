@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Spinner from '../components/Spinner';
 import authService from '../services/authService';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const PlaceholderChart = ({ title }) => (
   <div className="bg-white dark:bg-env-gray-dark p-6 rounded-lg shadow-lg">
@@ -29,7 +30,7 @@ const EnvDashboardPage = () => {
     const fetchPageData = async () => {
       setIsLoading(true); setError(null);
       try {
-        const data = await authService.authenticatedFetch('/api/dashboard/dominica');
+        const data = await authService.authenticatedFetch(`${API_URL}/api/dashboard/dominica`);
         setPageData(data);
       } catch (e) {
         console.error("Failed to fetch dashboard page data:", e);
